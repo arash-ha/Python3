@@ -1,2 +1,2 @@
-# Python
-LeetCode problems with Python
+# Python3
+LeetCode problems with Python3
