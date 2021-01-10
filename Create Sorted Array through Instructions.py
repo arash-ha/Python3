@@ -43,10 +43,11 @@ Constraints:
 
 class Solution:
     def createSortedArray(self, instructions: List[int]) -> int:
-        vec = [0] * (max(instructions) + 1)
+        mx = max(instructions)
+        vec = [0] * (mx + 1)
 
         def update(i):
-            while i <= max(instructions):
+            while i <= mx:
                 vec[i] += 1
                 i += i & -i
 
@@ -56,11 +57,10 @@ class Solution:
             while i > 0:
                 res += vec[i]
                 i -= i & -i
-            return res;
+            return res
 
         res = 0
         for i, a in enumerate(instructions):
             res += min(get(a - 1), i - get(a))
             update(a)
-
         return res % (10 ** 9 + 7)
