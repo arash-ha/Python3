@@ -52,4 +52,4 @@ class Solution:
                     bricks -= diff
                 if bricks < 0:
                     return i
-        return len(H) - 1
+        return len(heights) - 1
