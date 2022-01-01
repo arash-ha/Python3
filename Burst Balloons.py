@@ -20,13 +20,14 @@ Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
 
 class Solution:
     def maxCoins(self, nums: List[int]) -> int:
-        nums1 = [1] + [i for i in nums if i > 0] + [1]
-        n = len(nums1)
-        dp = [[0]*n for _ in range(n)]
-
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0] * n for _ in range(n)]
+    
         for k in range(2, n):
             for l in range(0, n - k):
                 r = l + k
                 for i in range(l + 1, r):
-                    dp[l][r] = max(dp[l][r], nums1[l] * nums1[i] * nums1[r] + dp[l][i] + dp[i][r])
+                    dp[l][r] = max(dp[l][r], nums[l] * nums[i] * nums[r] + dp[l][i] + dp[i][r])
+    
         return dp[0][n - 1]
