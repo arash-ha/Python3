@@ -1,3 +1,4 @@
+
 """
 Broken Calculator
 
@@ -38,7 +39,7 @@ Note:
 1 <= X <= 10^9
 1 <= Y <= 10^9
 """
-
+# Solution I
 class Solution:
     def brokenCalc(self, X: int, Y: int) -> int:
         if X == Y:
@@ -49,3 +50,13 @@ class Solution:
             return 1 + self.brokenCalc(X, Y + 1)
         else:
             return 1 + self.brokenCalc(X, Y // 2)
+        
+# Solution II
+
+class Solution:
+    def brokenCalc(self, startValue: int, target: int) -> int:
+        res = 0
+        while startValue < target:
+            target = target + 1 if target % 2 > 0 else target // 2
+            res += 1
+        return res + startValue - target
