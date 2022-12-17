@@ -39,6 +39,8 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 
 """
 
+# Solution I
+
 class MyQueue:
 
     def __init__(self):
@@ -55,6 +57,54 @@ class MyQueue:
 
     def empty(self) -> bool:
         return len(self.stk) == 0
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
+
+# Solution II
+
+class MyQueue:
+
+    def __init__(self):
+        self.stk1 = []
+        self.stk2 = []
+
+    def push(self, x: int) -> None:
+        self.stk1.append(x)
+
+    def pop(self) -> int:
+        if self.stk2:
+            n = self.stk2[-1]
+            self.stk2.pop()
+            return n
+        else:
+            while self.stk1:
+                n = self.stk1[-1]
+                self.stk2.append(n)
+                self.stk1.pop()
+            n = self.stk2[-1]
+            self.stk2.pop()
+            return n
+
+    def peek(self) -> int:
+        if self.stk2:
+            return self.stk2[-1]
+        else:
+            while self.stk1:
+                n = self.stk1[-1]
+                self.stk1.pop()
+                self.stk2.append(n)
+            return self.stk2[-1]
+
+    def empty(self) -> bool:
+        if self.stk1 or self.stk2:
+            return False
+        return True
+
 
 # Your MyQueue object will be instantiated and called as such:
 # obj = MyQueue()
