@@ -23,7 +23,7 @@ Constraints:
 1 <= piles.length <= 100
 1 <= piles[i] <= 10^4
 """
-
+# Solution I
 class Solution:
     def stoneGameII(self, piles: List[int]) -> int:
         n = len(piles)
@@ -35,3 +35,17 @@ class Solution:
             if i + 2 * m >= n: return piles[i]
             return piles[i] - min(dp(i + x, max(m, x)) for x in range(1, 2 * m + 1))
         return dp(0, 1)
+    
+# Solution II
+
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        @lru_cache(None)
+        def dfs(start, m):
+            res = 0
+            total = sum(piles[start:])
+            for i in range(1, min(2 * m + 1, len(piles) - start + 1)):
+                optima = dfs(start + i, max(m, i))
+                res = max(res, total - optima)
+            return res
+        return dfs(0, 1)
